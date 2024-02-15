@@ -1,0 +1,24 @@
+{% with patientstudy=study.patientstudymoduleattr_set.get %}
+**OpenREM high dose CT alert**
+
+A radiography study has triggered a high dose alert. See below for details. This message has been
+automatically sent by OpenREM: please do not reply as this mailbox is not monitored.
+
+This study
+	Study date:		{{ study.study_date|date:"d/m/y" }}
+	Study time:		{{ study.study_time|date:"H:i" }}
+	Study description:	{{ study.study_description }}
+	Procedure:		{{ study.procedure_code_meaning }}
+	Requested procedure:	{{ study.requested_procedure_code_meaning }}
+	Patient height:		{{ patientstudy.patient_size|floatformat:2 }} m
+	Patient weight:		{{ patientstudy.patient_weight|floatformat:1 }} kg
+
+	Display name:		{{ study.generalequipmentmoduleattr_set.get.unique_equipment_name.display_name }}
+	Accession number:	{{ study.accession_number }}
+	OpenREM link:		{{ server_url }}/ct/{{ study.pk }}/
+	
+	Exposure Index:		{{ this_study_ctdi }}
+	This is above the alert level of: {{ alert_level|floatformat:1 }})
+
+{% endwith %}
+
